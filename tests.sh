@@ -68,3 +68,8 @@ done
 
 printf " Done!\nSaved in $file\n\nEnd of script\n"
 
+# making tests results analysis
+printf "\nMaking tests results analysis...\n\n"
+Rscript ./resultsAnalysis.R
+rm Rplots.pdf
+printf "\nDone! Graphics can be found in results/ directory\n"
