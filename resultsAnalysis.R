@@ -9,8 +9,29 @@ path <- './results/'
 # get file list in paths
 files <- dir(path)
 
+# function to print results statistics
+printStatistics <- function(table) {
+  times <- table$time
+  m <- mean(times)
+  s <- sd(times)
+  
+  # ci for 95%
+  error <- qnorm(0.975)*s/sqrt(100)
+  
+  cat(
+    "Mean: ", m, "s\n",
+    "Min: ", min(times), "s\n",
+    "Max: ", max(times), "s\n",
+    "SD: ", s, "s\n",
+    "CI of 95%: [", m-error, "s, ", m+error, "s]\n",
+    sep=""
+  )
+}
+
 
 ## TESTS WITH ARRAY SIZE --------------------------------------------------
+
+cat("*** Array size variation results\n")
 
 t_array <- read.table(paste0(path, files[1]), header=T, sep=';')
 
@@ -28,25 +49,15 @@ ggplot(t_array, aes(t_array$array_size, t_array$time)) +
   )
 
 # save plot
-ggsave("results/arrayVariation.png")
+suppressMessages(ggsave("results/arrayVariation.png"))
 
 # get statistics
-m <- mean(t_array$time)
-s <- sd(t_array$time)
-
-# ci for 95%
-error <- qnorm(0.975)*s/sqrt(100)
-
-# print results
-m
-min(t_array$time)
-max(t_array$time)
-s
-m-error
-m+error
+printStatistics(t_array)
 
 
 ## TESTS WITH NUMBER OF THREADS -------------------------------------------
+
+cat("\n*** Threads variation results\n")
 
 t_threads <- read.table(paste0(path, files[2]), header=T, sep=';')
 
@@ -60,25 +71,15 @@ ggplot(t_threads, aes(t_threads$threads, t_threads$time)) +
     title="Threads number variation", subtitle="Array size of 1.000.000 and 1 if", y="Time (s)", x="Number of threads")
 
 # save plot
-ggsave("results/threadsVariation.png")
+suppressMessages(ggsave("results/threadsVariation.png"))
 
 # get statistics
-m <- mean(t_threads$time)
-s <- sd(t_threads$time)
-
-# ci for 95%
-error <- qnorm(0.975)*s/sqrt(100)
-
-# print results
-m
-min(t_threads$time)
-max(t_threads$time)
-s
-m-error
-m+error
+printStatistics(t_threads)
 
 
 ## TESTS WITH IF CHAIN SIZE -----------------------------------------------
+
+cat("\n*** IF chain variation results\n")
 
 t_ifs <- read.table(paste0(path, files[3]), header=T, sep=';')
 
@@ -99,19 +100,7 @@ ggplot(t_ifs, aes(t_ifs$ifs, t_ifs$time)) +
   )
 
 # save plot
-ggsave("results/ifsVariation.png")
+suppressMessages(ggsave("results/ifsVariation.png"))
 
 # get statistics
-m <- mean(t_ifs$time)
-s <- sd(t_ifs$time)
-
-# ci for 95%
-error <- qnorm(0.975)*s/sqrt(100)
-
-# print results
-m
-min(t_ifs$time)
-max(t_ifs$time)
-s
-m-error
-m+error
+printStatistics(t_ifs)
