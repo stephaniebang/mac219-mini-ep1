@@ -10,3 +10,5 @@ and then run the script with the command
 ./tests.sh
 ```
 The files with the resulting data will be saved in the directory `./results.`
+
+> It is important to notice that the scripts made are very simple and the R script only analyzes the 3 first files in the `./results` directory
