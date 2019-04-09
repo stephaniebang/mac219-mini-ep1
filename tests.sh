@@ -57,6 +57,7 @@ max_ifs=100
 file="results/$(timestamp)-a$array-t$threads-i$max_ifs.txt"
 
 echo "array_size;threads;time" >> $file
+./contention $threads $array >> $file
 
 while [ $ifs -le $max_ifs ]
 do
